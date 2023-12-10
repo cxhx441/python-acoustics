@@ -6,7 +6,7 @@ import pytest
 from acoustics.criterion import nc_curve, nc
 
 
-@pytest.mark.parametrize("nc, expected", [
+@pytest.mark.parametrize("nc_val, expected", [
     (15, np.array([47, 36, 29, 22, 17, 14, 12, 11])),
     (20, np.array([51, 40, 33, 26, 22, 19, 17, 16])),
     (25, np.array([54, 44, 37, 31, 27, 24, 22, 21])),
@@ -22,12 +22,13 @@ from acoustics.criterion import nc_curve, nc
     (11, None),
     (79, None),
 ])
-def test_nc_curve(nc, expected):
-    curve = nc_curve(nc)
+def test_nc_curve(nc_val, expected):
+    curve = nc_curve(nc_val)
     assert_array_equal(curve, expected)
 
 
 @pytest.mark.parametrize("levels, expected", [
+    (np.array([10]*8), 15),
     (np.array([64, 56, 50, 45, 41, 39, 38, 37]), 40),
     (np.array([65, 56, 50, 45, 41, 39, 38, 37]), 45),
     (np.zeros(8), 15),
